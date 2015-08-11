@@ -1,8 +1,7 @@
 class LinkedList
-  attr_accessor :next
+
   def initialize
     @head = nil
-    @next = nil
   end
 
   def add(value)
@@ -13,6 +12,27 @@ class LinkedList
       node.next = @head
       @head = node
     end
+  end
+
+  def remove(val)
+    return nil if @head.nil?
+    node = @head
+    del_node = nil
+
+    if node.val == val
+      del_node = @head.val
+      @head = @head.next
+      return del_node
+    else
+      until node.nil?
+        if node.next.val == val
+          del_node = node.next.val
+          node.next = node.next.next
+          return del_node
+        end
+      end
+    end
+    del_node
   end
 
   def count
@@ -27,3 +47,4 @@ class LinkedList
 
   Node = Struct.new(:val, :next)
 end
+

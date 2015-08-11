@@ -12,7 +12,6 @@ class TestLinkedList < MiniTest::Test
 
   def test_initial_values_are_nil
     assert_equal nil, @ll.head
-    assert_equal nil, @ll.next
   end
 
   def test_values_of_empty_node
@@ -50,5 +49,32 @@ class TestLinkedList < MiniTest::Test
     @ll.add(10)
     @ll.add(15)
     assert_equal 3, @ll.count
+  end
+
+  def test_removal_of_value_of_empty_linked_list
+    assert_equal nil, @ll.remove(5)
+  end
+
+  def test_removel_one_existing_value_in_linked_list
+    @ll.add(5)
+    assert_equal 5, @ll.remove(5)
+    assert_equal 0, @ll.count
+  end
+
+  def test_removal_of_linked_list_size_2
+    @ll.add(5)
+    @ll.add(10)
+    assert_equal 5, @ll.remove(5)
+    assert_equal 1, @ll.count
+    assert_equal 10, @ll.head.val
+  end
+
+  def test_removal_of_linked_list_size_3
+    @ll.add(5)
+    @ll.add(10)
+    @ll.add(15)
+    assert_equal 3, @ll.count
+    assert_equal 10, @ll.remove(10)
+    assert_equal 2, @ll.count
   end
 end
