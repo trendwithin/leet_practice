@@ -9,6 +9,9 @@ class LinkedList
     node = Node.new(value, nil)
     if @head.nil?
       @head = node
+    else
+      node.next = @head
+      @head = node
     end
   end
 

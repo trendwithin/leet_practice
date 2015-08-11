@@ -26,6 +26,16 @@ class TestLinkedList < MiniTest::Test
   @ll.add(value)
   assert_equal 5, @ll.head.val
  end
+
+ def test_insertion_of_two_values
+  first_value = 10
+  second_value = 5
+  @ll.add(first_value)
+  @ll.add(second_value)
+  assert_equal 5, @ll.head.val
+  assert_equal 10, @ll.head.next.val
+ end
+
  def test_size_of_empty_linked_list
     skip
  end
