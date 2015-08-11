@@ -15,5 +15,15 @@ class LinkedList
     end
   end
 
+  def count
+    node_count = 0
+    node = @head
+    until node.nil?
+      node_count += 1
+      node = node.next
+    end
+    node_count
+  end
+
   Node = Struct.new(:val, :next)
 end
