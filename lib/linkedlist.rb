@@ -45,6 +45,16 @@ class LinkedList
     node_count
   end
 
+  def search(val)
+    node = @head
+
+    until node.nil?
+      return node.val if node.val == val
+      node = node.next
+    end
+    nil
+  end
+
   Node = Struct.new(:val, :next)
 end
 

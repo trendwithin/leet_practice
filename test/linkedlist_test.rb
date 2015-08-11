@@ -77,4 +77,13 @@ class TestLinkedList < MiniTest::Test
     assert_equal 10, @ll.remove(10)
     assert_equal 2, @ll.count
   end
+
+  def test_linked_list_is_returns_nil_when_searched_value_non_existant
+    assert_equal nil, @ll.search(5)
+  end
+
+  def test_linked_list_returns_value_if_searched_value_exists
+    @ll.add(5)
+    assert_equal 5, @ll.search(5)
+  end
 end
