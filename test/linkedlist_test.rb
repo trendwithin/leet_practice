@@ -1,5 +1,5 @@
 require './test/minitest_helper'
-require 'linkedlist'
+require './lib/linkedlist'
 
 class TestLinkedList < MiniTest::Test
   def setup
@@ -8,82 +8,75 @@ class TestLinkedList < MiniTest::Test
 
  def test_instance_of_linkedlist
   assert_instance_of LinkedList, @ll
+  assert_equal nil, @ll.head
  end
 
-  def test_initial_values_are_nil
-    assert_equal nil, @ll.head
-  end
+ def test_value_of_node_struct
+   node = LinkedList::Node.new
+   assert_equal nil, @node
+ end
 
-  def test_values_of_empty_node
-   @node = LinkedList::Node.new
-     assert_equal nil, @node.val
-     assert_equal nil, @node.next
-  end
-
-  def test_insertion
-    value = 5
-    @ll.add(value)
+  def test_adding_an_item
+    @ll.add(5)
     assert_equal 5, @ll.head.val
   end
 
   def test_insertion_of_two_values
-    first_value = 10
-    second_value = 5
-    @ll.add(first_value)
-    @ll.add(second_value)
-    assert_equal 5, @ll.head.val
-    assert_equal 10, @ll.head.next.val
+    @ll.add(5)
+    @ll.add(10)
+    assert_equal 10, @ll.head.val
+    assert_equal 5, @ll.head.next.val
+  end
+
+  def test_deletion_of_empty_list
+    assert_raises(RuntimeError, 'Empty List') { @ll.delete(7) }
+  end
+
+  def test_deletion_with_one_item_in_list
+    @ll.add(5)
+    @ll.delete(5)
+    assert_equal nil, @ll.head
+  end
+
+  def test_deletion_with_two_elements_in_list
+    @ll.add(5)
+    @ll.add(10)
+    assert_equal 5, @ll.delete(5)
+    assert_equal 10, @ll.delete(10)
+    assert_equal nil, @ll.head
+  end
+
+  def test_deleting_all_items_in_three_item_list
+    @ll.add(6)
+    @ll.add(7)
+    @ll.add(8)
+    assert_equal 7, @ll.delete(7)
+    assert_equal 8, @ll.head.val
+    assert_equal 6, @ll.head.next.val
+    assert_equal 8, @ll.delete(8)
+    assert_equal 6, @ll.delete(6)
   end
 
   def test_count_of_empty_linked_list
     assert_equal 0, @ll.count
   end
 
-  def test_count_of_size_one_linked_list
-    @ll.add(5)
-    assert_equal 1, @ll.count
-  end
-
-  def test_count_of_size_three_linked_list
-    @ll.add(5)
-    @ll.add(10)
-    @ll.add(15)
+  def test_count_of_3_element_linked_list
+    3.times { |i| @ll.add(i) }
     assert_equal 3, @ll.count
   end
 
-  def test_removal_of_value_of_empty_linked_list
-    assert_equal nil, @ll.remove(5)
+  def test_search_an_empty_linked_list
+    assert_equal nil, @ll.search(0)
   end
 
-  def test_removel_one_existing_value_in_linked_list
+  def test_search_for_item_not_in_list
     @ll.add(5)
-    assert_equal 5, @ll.remove(5)
-    assert_equal 0, @ll.count
+    assert_equal nil, @ll.search(7)
   end
 
-  def test_removal_of_linked_list_size_2
-    @ll.add(5)
-    @ll.add(10)
-    assert_equal 5, @ll.remove(5)
-    assert_equal 1, @ll.count
-    assert_equal 10, @ll.head.val
-  end
-
-  def test_removal_of_linked_list_size_3
-    @ll.add(5)
-    @ll.add(10)
-    @ll.add(15)
-    assert_equal 3, @ll.count
-    assert_equal 10, @ll.remove(10)
-    assert_equal 2, @ll.count
-  end
-
-  def test_linked_list_is_returns_nil_when_searched_value_non_existant
-    assert_equal nil, @ll.search(5)
-  end
-
-  def test_linked_list_returns_value_if_searched_value_exists
-    @ll.add(5)
-    assert_equal 5, @ll.search(5)
+  def test_search_for_existing_item_returns_value
+    3.times { |i| @ll.add(i) }
+    assert_equal 2, @ll.search(2)
   end
 end

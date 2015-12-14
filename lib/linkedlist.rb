@@ -1,11 +1,12 @@
 class LinkedList
+  attr_reader :head, :next
 
   def initialize
     @head = nil
   end
 
-  def add(value)
-    node = Node.new(value, nil)
+  def add val
+    node = Node.new(val, nil)
     if @head.nil?
       @head = node
     else
@@ -14,47 +15,47 @@ class LinkedList
     end
   end
 
-  def remove(val)
-    return nil if @head.nil?
+  def delete val
+    raise 'Empty List' if @head.nil?
     node = @head
-    del_node = nil
 
     if node.val == val
-      del_node = @head.val
-      @head = @head.next
-      return del_node
+      @head = node.next
+      return val
     else
       until node.nil?
         if node.next.val == val
-          del_node = node.next.val
           node.next = node.next.next
-          return del_node
+          return val
+        else
+          node = node.next
         end
       end
     end
-    del_node
   end
 
   def count
-    node_count = 0
+    return 0 if @head.nil?
+
+    count = 0
     node = @head
     until node.nil?
-      node_count += 1
+      count += 1
       node = node.next
     end
-    node_count
+    count
   end
 
-  def search(val)
-    node = @head
+  def search val
+    return nil if @head.nil?
 
+    node = @head
     until node.nil?
-      return node.val if node.val == val
+      return val if node.val == val
       node = node.next
     end
     nil
   end
-
+  
   Node = Struct.new(:val, :next)
 end
-
